@@ -1,0 +1,98 @@
+name: multivendor-evpn-vxlan-clos
+
+topology:
+  nodes:
+    spine1:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/spine1.cfg
+      mgmt-ipv4: 172.20.20.11
+
+    spine2:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/spine2.cfg
+      mgmt-ipv4: 172.20.20.12
+
+    leaf1:
+      kind: vyosnetworks_vyos
+      image: vyos:2026.03-stream
+      startup-config: configs/leaf1.cfg
+      mgmt-ipv4: 172.20.20.101
+
+    leaf2:
+      kind: arista_ceos
+      image: ceos:4.36.0.1F
+      startup-config: configs/leaf2.cfg
+      mgmt-ipv4: 172.20.20.102
+
+    leaf3:
+      kind: sonic-vs
+      image: docker-sonic-vs:202605
+      mgmt-ipv4: 172.20.20.103
+      binds:
+        - configs/leaf3-init.sh:/configs/leaf3-init.sh:ro
+        - configs/leaf3-linux.sh:/configs/leaf3-linux.sh:ro
+        - configs/leaf3-frr.conf:/configs/leaf3-frr.conf:ro
+      exec:
+        - bash -lc "bash /configs/leaf3-init.sh"
+
+    leaf4:
+      kind: juniper_cjunosevolved
+      image: cjunosevolved:25.4R1.13-EVO
+      startup-config: configs/leaf4.cfg
+      mgmt-ipv4: 172.20.20.104
+      env:
+        # To start the BT flavor, change "BX" to "BT" below
+        CPTX_COSIM: "BX"
+
+    client1:
+      kind: linux
+      image: alpine:latest
+      exec:
+        - ip link set eth1 up
+        - ip addr add 192.168.100.1/24 dev eth1
+
+    client2:
+      kind: linux
+      image: alpine:latest
+      exec:
+        - ip link set eth1 up
+        - ip addr add 192.168.100.2/24 dev eth1
+
+    client3:
+      kind: linux
+      image: alpine:latest
+      exec:
+        - ip link set eth1 up
+        - ip addr add 192.168.100.3/24 dev eth1
+
+    client4:
+      kind: linux
+      image: alpine:latest
+      exec:
+        - ip link set eth1 up
+        - ip addr add 192.168.100.4/24 dev eth1
+
+  links:
+    - endpoints: ["leaf1:eth1", "spine1:eth1"]
+    - endpoints: ["leaf1:eth2", "spine2:eth1"]
+
+    - endpoints: ["leaf2:eth1", "spine1:eth2"]
+    - endpoints: ["leaf2:eth2", "spine2:eth2"]
+
+    - endpoints: ["leaf3:Ethernet0", "spine1:eth3"]
+    - endpoints: ["leaf3:Ethernet4", "spine2:eth3"]
+
+    - endpoints: ["leaf4:et-0/0/0", "spine1:eth4"]
+    - endpoints: ["leaf4:et-0/0/1", "spine2:eth4"]
+
+    # L2延伸確認用クライアント
+    - endpoints: ["client1:eth1", "leaf1:eth3"]
+    - endpoints: ["client2:eth1", "leaf2:eth3"]
+    - endpoints: ["client3:eth1", "leaf3:Ethernet8"]
+    - endpoints: ["client4:eth1", "leaf4:et-0/0/2"]
+
+mgmt:
+  network: clab-mgmt
+  ipv4-subnet: 172.20.20.0/24
