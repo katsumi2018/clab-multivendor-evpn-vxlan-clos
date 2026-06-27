@@ -28,7 +28,7 @@ topology:
 
     leaf3:
       kind: sonic-vs
-      image: docker-sonic-vs:202605
+      image: docker-sonic-vs:202511
       mgmt-ipv4: 172.20.20.103
       binds:
         - configs/leaf3-init.sh:/configs/leaf3-init.sh:ro
