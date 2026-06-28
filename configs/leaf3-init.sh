@@ -33,7 +33,7 @@ VTYSH_WAIT_RETRIES="60"
 # The retry loop uses only local clears on this SONiC leaf; spines are not touched.
 BGP_UNDERLAY_NEIGHBORS="Ethernet0 Ethernet4"
 BGP_EVPN_NEIGHBORS="10.255.0.101 10.255.0.102"
-BGP_WAIT_RETRIES="12"
+BGP_WAIT_RETRIES="24"
 BGP_WAIT_INTERVAL="5"
 
 # ConfigDB を保存するかどうか。再起動後の再現性を優先して標準は保存する。
