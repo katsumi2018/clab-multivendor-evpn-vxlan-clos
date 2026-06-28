@@ -39,43 +39,6 @@ BGP_WAIT_INTERVAL="5"
 # ConfigDB を保存するかどうか。再起動後の再現性を優先して標準は保存する。
 SAVE_CONFIG_DB="1"
 
-
-#-------------------------------------------------------------
-# NODE_NAME="${NODE_NAME:-leaf3}"
-
-# # ラボ操作用ユーザー。containerlab の管理アクセス確認に使う。
-# ADMIN_USER="${ADMIN_USER:-admin}"
-# ADMIN_PASSWORD="${ADMIN_PASSWORD:-admin}"
-
-# # NODE_NAME から派生する設定ファイル。
-# LINUX_CONFIG="${LINUX_CONFIG:-/configs/${NODE_NAME}-linux.sh}"
-# FRR_CONFIG="${FRR_CONFIG:-/configs/${NODE_NAME}-frr.conf}"
-
-# # config vlan / config vxlan を投入する前に必要な SONiC manager。
-# SONIC_MANAGER_SERVICES="${SONIC_MANAGER_SERVICES:-portmgrd intfmgrd vlanmgrd vxlanmgrd}"
-
-# # このラボで使う FRR daemon。mgmtd は vtysh -f が詰まることがあるため停止する。
-# FRR_DAEMONS_ENABLE="${FRR_DAEMONS_ENABLE:-zebra bgpd ospfd}"
-# FRR_DAEMONS_DISABLE="${FRR_DAEMONS_DISABLE:-mgmtd staticd}"
-
-# # 起動待ちの最大時間。
-# SONIC_MANAGER_WAIT_RETRIES="${SONIC_MANAGER_WAIT_RETRIES:-60}"
-# VTYSH_WAIT_RETRIES="${VTYSH_WAIT_RETRIES:-60}"
-
-# # BGP sessions that should be ready after FRR config is applied.
-# # The retry loop uses only local clears on this SONiC leaf; spines are not touched.
-# BGP_UNDERLAY_NEIGHBORS="${BGP_UNDERLAY_NEIGHBORS:-Ethernet0 Ethernet4}"
-# BGP_EVPN_NEIGHBORS="${BGP_EVPN_NEIGHBORS:-10.255.0.101 10.255.0.102}"
-# BGP_WAIT_RETRIES="${BGP_WAIT_RETRIES:-12}"
-# BGP_WAIT_INTERVAL="${BGP_WAIT_INTERVAL:-5}"
-
-# # ConfigDB を保存するかどうか。再起動後の再現性を優先して標準は保存する。
-# SAVE_CONFIG_DB="${SAVE_CONFIG_DB:-1}"
-
-#-------------------------------------------------------------
-
-
-
 log() {
   echo "[${NODE_NAME}-init] $*"
 }
