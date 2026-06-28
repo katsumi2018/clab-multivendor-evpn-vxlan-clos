@@ -8,18 +8,6 @@ set -u
 # NODE_NAME はログ用、VTEP_IP は leaf の Loopback0 / VTEP IP。
 # ============================================================
 
-# NODE_NAME="${NODE_NAME:-leaf3}"
-# UNDERLAY_IFS="${UNDERLAY_IFS:-Ethernet0 Ethernet4}"
-# ACCESS_IF="${ACCESS_IF:-Ethernet8}"
-# LOOPBACK_IF="${LOOPBACK_IF:-Loopback0}"
-# VTEP_IP="${VTEP_IP:-10.255.0.3}"
-# VLAN_ID="${VLAN_ID:-100}"
-# VNI_ID="${VNI_ID:-10100}"
-# VTEP_NAME="${VTEP_NAME:-vtep}"
-# NVO_NAME="${NVO_NAME:-nvo}"
-# BRIDGE_IF="${BRIDGE_IF:-Bridge}"
-# VXLAN_IF="${VXLAN_IF:-vxlan${VNI_ID}}"
-
 NODE_NAME="leaf3"
 UNDERLAY_IFS="Ethernet0 Ethernet4"
 ACCESS_IF="Ethernet8"
